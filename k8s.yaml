@@ -126,11 +126,11 @@ metadata:
   labels:
     app: redis
 spec:
+  type: NodePort
   ports:
     - port: 6379
   selector:
     app: redis
-    tier: cache
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -150,9 +150,8 @@ spec:
     spec:
       containers:
       - name: masajid-frontend
-
         image: eu.gcr.io/masajid-252320/masajid-frontend:1.0.1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
@@ -161,7 +160,7 @@ spec:
         - name: RAILS_MASTER_KEY
           value: "7c7b183f59c356cc7277279711d0ace4"
         - name: PROJECT_HOSTNAME
-          value: "localhost:3000"
+          value: "masajid.world"
         - name: POSTGRES_USER
           value: "masajid"
         - name: POSTGRES_PASSWORD
@@ -186,3 +185,56 @@ spec:
           value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
         - name: REDIS_URL
           value: "redis://redis:6379/12"
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: masajid-sidekiq
+  labels:
+    app: masajid-sidekiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: masajid-sidekiq
+  template:
+    metadata:
+      labels:
+        app: masajid-sidekiq
+    spec:
+      containers:
+        - name: masajid-sidekiq
+          image: eu.gcr.io/masajid-252320/masajid-frontend:1.0.1
+          imagePullPolicy: Always
+          command: ["sidekiq", "-C", "config/sidekiq.yml"]
+          env:
+          - name: RAILS_SERVE_STATIC_FILES
+            value: "true"
+          - name: RAILS_MASTER_KEY
+            value: "7c7b183f59c356cc7277279711d0ace4"
+          - name: PROJECT_HOSTNAME
+            value: "masajid.world"
+          - name: POSTGRES_USER
+            value: "masajid"
+          - name: POSTGRES_PASSWORD
+            value: "CPnmdlABCmSCl419"
+          - name: POSTGRES_DATABASE
+            value: "masajid"
+          - name: POSTGRES_HOST
+            value: "postgres"
+          - name: SUPER_ADMIN_EMAIL
+            value: "admin@masajid.com"
+          - name: SUPER_ADMIN_PASSWORD
+            value: "masajid"
+          - name: ADMIN_SENDER_EMAIL
+            value: "admin@gmail.com"
+          - name: ADMIN_NOTIFICATION_EMAILS
+            value: "admin@gmail.com,admin_2@gmail.com"
+          - name: MAILJET_API_KEY
+            value: "091e123850da5deb5373b15d5cd7e549"
+          - name: MAILJET_SECRET_KEY
+            value: "9e3df088906f46a6c7069469caac43a2"
+          - name: MAPBOX_ACCESS_TOKEN
+            value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
+          - name: REDIS_URL
+            value: "redis://redis:6379/12"
