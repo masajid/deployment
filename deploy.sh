@@ -2,8 +2,8 @@ set -xe
 
 DEPLOYMENT_PATH=$(dirname $(realpath $(echo $0)))
 APPLICATION_PATH=$(pwd)
-VERSION=$(cat ${APPLICATION_PATH}/version)
-APP_NAME=$(cat ${APPLICATION_PATH}/name)
+VERSION=$(cat ${APPLICATION_PATH}/.docker-image-version)
+APP_NAME=$(cat ${APPLICATION_PATH}/.docker-image-name)
 PROJECT_ID=$(gcloud config get-value project)
 
 
