@@ -170,7 +170,7 @@ spec:
         - name: POSTGRES_HOST
           value: "postgres"
         - name: SUPER_ADMIN_EMAIL
-          value: "admin@masajid.com"
+          value: "admin@masajid.world"
         - name: SUPER_ADMIN_PASSWORD
           value: "masajid"
         - name: ADMIN_SENDER_EMAIL
@@ -223,7 +223,7 @@ spec:
           - name: POSTGRES_HOST
             value: "postgres"
           - name: SUPER_ADMIN_EMAIL
-            value: "admin@masajid.com"
+            value: "admin@masajid.world"
           - name: SUPER_ADMIN_PASSWORD
             value: "masajid"
           - name: ADMIN_SENDER_EMAIL
