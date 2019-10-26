@@ -174,13 +174,13 @@ spec:
         - name: SUPER_ADMIN_PASSWORD
           value: "masajid"
         - name: ADMIN_SENDER_EMAIL
-          value: "admin@gmail.com"
+          value: "admin@masajid.world"
         - name: ADMIN_NOTIFICATION_EMAILS
-          value: "admin@gmail.com,admin_2@gmail.com"
+          value: "admin@masajid.world"
         - name: MAILJET_API_KEY
-          value: "091e123850da5deb5373b15d5cd7e549"
+          value: "6b06c311db5162c15ecd15a205ac7664"
         - name: MAILJET_SECRET_KEY
-          value: "9e3df088906f46a6c7069469caac43a2"
+          value: "87e899d768246d46199e55edb0f01016"
         - name: MAPBOX_ACCESS_TOKEN
           value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
         - name: REDIS_URL
@@ -227,13 +227,13 @@ spec:
           - name: SUPER_ADMIN_PASSWORD
             value: "masajid"
           - name: ADMIN_SENDER_EMAIL
-            value: "admin@gmail.com"
+            value: "admin@masajid.world"
           - name: ADMIN_NOTIFICATION_EMAILS
-            value: "admin@gmail.com,admin_2@gmail.com"
+            value: "admin@masajid.world"
           - name: MAILJET_API_KEY
-            value: "091e123850da5deb5373b15d5cd7e549"
+            value: "6b06c311db5162c15ecd15a205ac7664"
           - name: MAILJET_SECRET_KEY
-            value: "9e3df088906f46a6c7069469caac43a2"
+            value: "87e899d768246d46199e55edb0f01016"
           - name: MAPBOX_ACCESS_TOKEN
             value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
           - name: REDIS_URL
