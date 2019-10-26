@@ -184,3 +184,5 @@ spec:
           value: "9e3df088906f46a6c7069469caac43a2"
         - name: MAPBOX_ACCESS_TOKEN
           value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
+        - name: REDIS_URL
+          value: "redis://redis:6379/12"
