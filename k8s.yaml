@@ -8,7 +8,6 @@ data:
   POSTGRES_HOST: postgres
   POSTGRES_DB: masajid
   POSTGRES_USER: masajid
-  POSTGRES_PASSWORD: CPnmdlABCmSCl419
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -60,6 +59,14 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
           envFrom:
             - configMapRef:
                 name: postgres-config
@@ -158,33 +165,53 @@ spec:
         - name: RAILS_SERVE_STATIC_FILES
           value: "true"
         - name: RAILS_MASTER_KEY
-          value: "7c7b183f59c356cc7277279711d0ace4"
+          valueFrom:
+            secretKeyRef:
+              name: rails
+              key: master-key
         - name: PROJECT_HOSTNAME
           value: "masajid.world"
         - name: POSTGRES_USER
-          value: "masajid"
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
-          value: "CPnmdlABCmSCl419"
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: password
         - name: POSTGRES_DATABASE
-          value: "masajid"
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_DB
         - name: POSTGRES_HOST
-          value: "postgres"
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-config
+              key: POSTGRES_HOST
         - name: SUPER_ADMIN_EMAIL
           value: "admin@masajid.world"
         - name: SUPER_ADMIN_PASSWORD
-          value: "masajid"
+          valueFrom:
+            secretKeyRef:
+              name: super-admin
+              key: password
         - name: ADMIN_SENDER_EMAIL
           value: "admin@masajid.world"
         - name: ADMIN_NOTIFICATION_EMAILS
           value: "admin@masajid.world"
-        - name: MAILJET_API_KEY
-          value: "6b06c311db5162c15ecd15a205ac7664"
-        - name: MAILJET_SECRET_KEY
-          value: "87e899d768246d46199e55edb0f01016"
         - name: MAPBOX_ACCESS_TOKEN
-          value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
+          valueFrom:
+            secretKeyRef:
+              name: mapbox
+              key: token
         - name: REDIS_URL
           value: "redis://redis:6379/12"
+        envFrom:
+        - secretRef:
+            name: mailjet
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -215,13 +242,25 @@ spec:
           - name: PROJECT_HOSTNAME
             value: "masajid.world"
           - name: POSTGRES_USER
-            value: "masajid"
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: POSTGRES_USER
           - name: POSTGRES_PASSWORD
-            value: "CPnmdlABCmSCl419"
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: password
           - name: POSTGRES_DATABASE
-            value: "masajid"
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: POSTGRES_DB
           - name: POSTGRES_HOST
-            value: "postgres"
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: POSTGRES_HOST
           - name: SUPER_ADMIN_EMAIL
             value: "admin@masajid.world"
           - name: SUPER_ADMIN_PASSWORD
