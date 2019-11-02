@@ -209,6 +209,21 @@ spec:
               key: token
         - name: REDIS_URL
           value: "redis://redis:6379/12"
+        - name: GCS_PROJECT_ID
+          valueFrom:
+            secretKeyRef:
+              name: google-cloud-storage-config
+              key: gcs-project-id
+        - name: GCS_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              name: google-cloud-storage-config
+              key: gcs-credentials
+        - name: GCS_BUCKET_NAME
+          valueFrom:
+            secretKeyRef:
+              name: google-cloud-storage-config
+              key: gcs-bucket-name
         envFrom:
         - secretRef:
             name: mailjet
@@ -277,3 +292,18 @@ spec:
             value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
           - name: REDIS_URL
             value: "redis://redis:6379/12"
+          - name: GCS_PROJECT_ID
+            valueFrom:
+              secretKeyRef:
+                name: google-cloud-storage-config
+                key: gcs-project-id
+          - name: GCS_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: google-cloud-storage-config
+                key: gcs-credentials
+          - name: GCS_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: google-cloud-storage-config
+                key: gcs-bucket-name
