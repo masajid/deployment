@@ -68,8 +68,8 @@ spec:
           - name: PGDATA
             value: /var/lib/postgresql/data/pgdata
           envFrom:
-            - configMapRef:
-                name: postgres-config
+          - configMapRef:
+            name: postgres-config
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
@@ -171,26 +171,11 @@ spec:
               key: master-key
         - name: PROJECT_HOSTNAME
           value: "masajid.world"
-        - name: POSTGRES_USER
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-config
-              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres
               key: password
-        - name: POSTGRES_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-config
-              key: POSTGRES_DB
-        - name: POSTGRES_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-config
-              key: POSTGRES_HOST
         - name: SUPER_ADMIN_EMAIL
           value: "admin@masajid.world"
         - name: SUPER_ADMIN_PASSWORD
@@ -212,6 +197,9 @@ spec:
         envFrom:
         - secretRef:
             name: mailjet
+        envFrom:
+        - configMapRef:
+          name: postgres-config
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -241,26 +229,11 @@ spec:
             value: "7c7b183f59c356cc7277279711d0ace4"
           - name: PROJECT_HOSTNAME
             value: "masajid.world"
-          - name: POSTGRES_USER
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config
-                key: POSTGRES_USER
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: postgres
                 key: password
-          - name: POSTGRES_DATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config
-                key: POSTGRES_DB
-          - name: POSTGRES_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: postgres-config
-                key: POSTGRES_HOST
           - name: SUPER_ADMIN_EMAIL
             value: "admin@masajid.world"
           - name: SUPER_ADMIN_PASSWORD
@@ -277,3 +250,6 @@ spec:
             value: "pk.eyJ1IjoibWdoYXJiaWsiLCJhIjoiY2pyNWJncTdvMWhuNTQ0cmx3c2xta2hkaiJ9.JJz956L-n8pyAzYBoHDXhw"
           - name: REDIS_URL
             value: "redis://redis:6379/12"
+          envFrom:
+          - configMapRef:
+            name: postgres-config
