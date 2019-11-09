@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_HOST: postgres
+  POSTGRES_DB: masajid
+  POSTGRES_USER: masajid
