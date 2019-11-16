@@ -56,6 +56,5 @@ spec:
         envFrom:
         - secretRef:
             name: mailjet
-        envFrom:
         - configMapRef:
-          name: postgres-config
+            name: postgres-config

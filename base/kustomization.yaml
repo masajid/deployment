@@ -1,5 +1,5 @@
 resources:
+  - config_map.yaml
   - postgres
   - redis
   - masajid
-  - config_map.yaml
