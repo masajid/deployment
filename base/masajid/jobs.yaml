@@ -4,6 +4,8 @@ metadata:
   name: newsletters
 spec:
   schedule: "*/30 4 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
