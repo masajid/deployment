@@ -16,13 +16,10 @@ spec:
     spec:
       containers:
       - name: masajid-frontend
-        image: eu.gcr.io/masajid-252320/masajid-frontend:1.0.1
+        image: eu.gcr.io/masajid-252320/masajid-frontend:latest
         imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
+        command: ["sidekiq", "-C", "config/sidekiq.yml"]
         env:
-        - name: RAILS_SERVE_STATIC_FILES
-          value: "true"
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:
@@ -35,22 +32,10 @@ spec:
             secretKeyRef:
               name: postgres
               key: password
-        - name: SUPER_ADMIN_EMAIL
-          value: "admin@masajid.world"
-        - name: SUPER_ADMIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: super-admin
-              key: password
         - name: ADMIN_SENDER_EMAIL
           value: "admin@masajid.world"
         - name: ADMIN_NOTIFICATION_EMAILS
           value: "admin@masajid.world"
-        - name: MAPBOX_ACCESS_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: mapbox
-              key: token
         - name: REDIS_URL
           value: "redis://redis:6379/12"
         envFrom:
