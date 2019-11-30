@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tls-ingress
+  annotations:
+  # One time static IP created
+  # create cmd -> gcloud compute addresses create k8s-ingress --global
+  # list cmd -> gcloud compute addresses list --filter="name=k8s-ingress"
+    kubernetes.io/ingress.global-static-ip-name: "k8s-ingress"
+spec:
+  tls:
+  - secretName: ssl # SSL certs stored in secrets, onetime cmd
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: masajid-frontend
+          servicePort: 3000
