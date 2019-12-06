@@ -1,0 +1,42 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: newsletters
+spec:
+  schedule: "*/30 4 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: masajid-frontend
+            image: eu.gcr.io/masajid-252320/masajid-frontend:latest
+            command: ["rake", "content:newsletters"]
+            imagePullPolicy: Always
+            env:
+            - name: RAILS_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rails
+                  key: master-key
+            - name: PROJECT_HOSTNAME
+              value: "masajid.world"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: ADMIN_SENDER_EMAIL
+              value: "admin@masajid.world"
+            - name: ADMIN_NOTIFICATION_EMAILS
+              value: "admin@masajid.world"
+            - name: REDIS_URL
+              value: "redis://redis:6379/12"
+            envFrom:
+            - secretRef:
+                name: mailjet
+            - configMapRef:
+                name: postgres-config
