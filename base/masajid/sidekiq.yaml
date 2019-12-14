@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: masajid-frontend
-        image: eu.gcr.io/masajid-252320/masajid-frontend:latest
+        image: eu.gcr.io/masajid-261221/masajid-frontend:latest
         imagePullPolicy: Always
         command: ["sidekiq", "-C", "config/sidekiq.yml"]
         env:
