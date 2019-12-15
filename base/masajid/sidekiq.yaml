@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: masajid-sidekiq
+  labels:
+    app: masajid-sidekiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: masajid-sidekiq
+  template:
+    metadata:
+      labels:
+        app: masajid-sidekiq
+    spec:
+      containers:
+      - name: masajid-frontend
+        image: eu.gcr.io/masajid-261221/masajid-frontend:latest
+        imagePullPolicy: Always
+        command: ["sidekiq", "-C", "config/sidekiq.yml"]
+        env:
+        - name: RAILS_MASTER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: rails
+              key: master-key
+        - name: PROJECT_HOSTNAME
+          value: "masajid.world"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: password
+        - name: ADMIN_SENDER_EMAIL
+          value: "admin@masajid.world"
+        - name: ADMIN_NOTIFICATION_EMAILS
+          value: "admin@masajid.world"
+        - name: REDIS_URL
+          value: "redis://redis:6379/12"
+        envFrom:
+        - secretRef:
+            name: mailjet
+        - secretRef:
+            name: google-cloud-storage-config
+        - configMapRef:
+            name: postgres-config

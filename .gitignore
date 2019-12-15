@@ -1,0 +1,5 @@
+# Ignore secrets
+secrets.sh
+
+# Ignore IDE files
+.idea/

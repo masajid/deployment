@@ -1,0 +1,5 @@
+resources:
+  - deployment.yaml
+  - jobs.yaml
+  - service.yaml
+  - sidekiq.yaml
