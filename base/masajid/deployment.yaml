@@ -50,6 +50,11 @@ spec:
             secretKeyRef:
               name: mapbox
               key: token
+        - name: GOOGLE_ANALYTICS_TRACKING_ID
+          valueFrom:
+            secretKeyRef:
+              name: google-analytics
+              key: tracking-id
         - name: REDIS_URL
           value: "redis://redis:6379/12"
         envFrom:
